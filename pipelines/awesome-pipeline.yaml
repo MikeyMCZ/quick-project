@@ -1,0 +1,33 @@
+parameters:
+- name: Environment
+  displayName: Environment for application deployment - TEST, PROD
+  type: string
+  values: ["prod", "test"]
+  default: "test"
+
+steps:
+- checkout: self
+  path: quick-project
+  persistCredentials: true
+
+- bash: |
+    apt-get install apt-transport-https
+    apt-get update -y
+    apt-get install -y dotnet-sdk-6.0
+  displayName: 'Restore all projects'
+
+- bash: |
+    dotnet build -c Release --no-restore
+    exit_code=$?
+    if [ $exit_code -ne 0 ]; then
+        echo "Failed to build Awesome"
+        exit $exit_code
+    fi
+
+    dotnet publish -c Release -o app --no-restore
+    exit_code=$?
+    if [ $exit_code -ne 0 ]; then
+        echo "Failed to publish Awesome"
+        exit $exit_code
+    fi
+  displayName: 'Build and publish'

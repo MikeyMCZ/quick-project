@@ -8,5 +8,5 @@ namespace AwesomeApplication.BL;
 
 public interface IAwesome
 {
-    Task<string> TranslateAsync(string text, string targetLanguage, string sourceLanguage = null, CancellationToken cancellationToken = default);
+    Task<string> TranslateAsync(string text, string targetLanguage, string? sourceLanguage = null, CancellationToken cancellationToken = default);
 }

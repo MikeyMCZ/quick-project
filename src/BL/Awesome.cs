@@ -12,7 +12,7 @@ namespace AwesomeApplication.BL
             this.client = new TextTranslationClient(new AzureKeyCredential("abcd"), "westus2");
         }
 
-        public async Task<string> TranslateAsync(string text, string targetLanguage, string sourceLanguage = null, CancellationToken cancellationToken = default)
+        public async Task<string> TranslateAsync(string text, string targetLanguage, string? sourceLanguage = null, CancellationToken cancellationToken = default)
         {
             // TranslateAsync throws when request is not valid - https://learn.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-translate#required-parameters
             var translationResponse = this.client.TranslateAsync(targetLanguage, text, sourceLanguage, cancellationToken).Result;
